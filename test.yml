@@ -3,8 +3,13 @@
   sudo: true
   vars:
     vsftpd_anon_root: /srv/shares
-    vsftpd_local_enable: YES
+    vsftpd_local_enable: true
     vsftpd_local_root: /srv/shares
+    vsftpd_options:
+      - key: delete_failed_uploads
+        value: 'YES'
+      - key: ftpd_banner
+        value: "Welcome to the FTP service"
   roles:
     - vsftpd
   post_tasks:
