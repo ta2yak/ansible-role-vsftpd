@@ -9,11 +9,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define 'ftpcentos' do |node|
     node.vm.box = 'bertvv/centos71'
     node.vm.hostname = 'ftpcentos'
+    node.vm.network 'private_network', ip: '192.168.56.23'
   end
 
   config.vm.define 'ftpubuntu' do |node|
     node.vm.box = 'ubuntu/trusty64'
     node.vm.hostname = 'ftpubuntu'
+    node.vm.network 'private_network', ip: '192.168.56.24'
   end
 
   config.vm.provision 'ansible' do |ansible|
