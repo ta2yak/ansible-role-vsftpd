@@ -2,9 +2,9 @@
 - hosts: all
   become: true
   vars:
-    vsftpd_anon_root: /srv/shares
+    vsftpd_anon_root: /srv/shares/public
     vsftpd_local_enable: true
-    vsftpd_local_root: /srv/shares
+    vsftpd_local_root: /srv/shares/private
     vsftpd_options:
       - key: delete_failed_uploads
         value: 'YES'
@@ -13,7 +13,11 @@
   roles:
     - vsftpd
   post_tasks:
-    - name: Put a demo file in the shared directory
+    - name: Put a demo file in the anonymous directory
       copy:
         dest: '{{ vsftpd_anon_root }}/README'
-        content: 'Welcome to the FTP service at {{ ansible_fqdn }}!'
+        content: 'anon_root'
+    - name: Put a demo file in the user directory
+      copy:
+        dest: '{{ vsftpd_local_root }}/README'
+        content: 'local_root'
