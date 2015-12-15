@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  sudo: true
+  become: true
   vars:
     vsftpd_anon_root: /srv/shares
     vsftpd_local_enable: true
