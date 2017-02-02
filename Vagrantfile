@@ -18,6 +18,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.network 'private_network', ip: '192.168.56.24'
   end
 
+  config.vm.define 'ftpfedora' do |node|
+    node.vm.box = 'bertvv/fedora25'
+    node.vm.hostname = 'ftpfedora'
+    node.vm.network 'private_network', ip: '192.168.56.25'
+  end
+
   config.vm.provision 'ansible' do |ansible|
     ansible.playbook = 'test.yml'
   end
