@@ -21,3 +21,20 @@
       copy:
         dest: '{{ vsftpd_local_root }}/README'
         content: 'local_root'
+    - name: Restart network (workaround for Vagrant bug 8096)
+      # See https://github.com/mitchellh/vagrant/issues/8096
+      service:
+        name: network
+        state: restarted
+      when: ansible_os_family == 'RedHat'
+    - name: Ensure firewall is not running
+      service:
+        name: firewalld
+        state: stopped
+      when: ansible_os_family == 'RedHat'
+    - name: Add user for testing authenticated access
+      user:
+        name: alice
+        state: present
+        password: '$6$vNPq5eom$xCeXlUBGlXqZB5Mj1J1Ts3xb/e8TBYix6o73HlkCCrGF8r4rPSMM2yavNqEg2RPUYgoqTuWEb3I07HJR48OxB1'
+        # alice
